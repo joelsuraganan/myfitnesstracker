@@ -1,0 +1,12 @@
+{% extends "myfitness/auth_layout.html" %}
+{% block title %}
+update
+{% endblock %}
+{% block content %}
+<h2>Edit Workout</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

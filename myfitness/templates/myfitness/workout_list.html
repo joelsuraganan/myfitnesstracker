@@ -1,0 +1,18 @@
+{% extends "myfitness/auth_layout.html" %}
+{% block title %}
+Workout Tracker
+{% endblock %}
+{% block content %}
+<h2>Workout List</h2>
+<p>test</p>
+    <ul>
+        {% for workout in workouts %}
+            <li>
+                {{ workout.lift }} - Set {{ workout.sets }} |
+                Reps: {{ workout.reps|default:"Not specified" }} |
+                Weight: {{ workout.weight|default:"Not specified" }} |
+                <a href="{% url 'workout_update' pk=workout.pk %}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

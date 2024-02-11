@@ -1,0 +1,70 @@
+{% extends "myfitness/auth_layout.html" %}
+{% block title %}
+Workout Tracker
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<p>Authenticated as
+<pre>
+    Name: {{ user.get_full_name }}
+    Email: {{ user.email }}
+</pre>
+</p>
+    
+<div class="boxes.container">
+    <div class="info-workout">
+        <h2>Workouts for today</h2>
+        <h3>Down below input your lift, reps, and weight then click save to view in dashboard</h3>
+        <!--a href="{% url 'workouttracker' %}"class="navbar-item">Click here to view/add more</a-->
+        <div class="box">
+        <form method="post" action="{% url 'workoutupdate' %}"> 
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lift</th>
+                        <th>Reps</th>
+                        <th>Weight</th>
+                    </tr>
+                </thead>
+                <tbody>  
+                    {% if not form.instance.id %}                             
+                    <tr>
+                        {% for field in form %}
+                        <td>{{ field }}</td>
+                        {% endfor %} 
+                        <td><button name="save">Save</button></td>
+                    </tr>
+                    {% endif %}
+                    {% for fitness in fitnesss %}   
+                    <tr>
+                        {% if form.instance.id == fitness.id %}
+                            {% for field in form %}
+                         
+                            <td>{{ field }}</td>
+                            {% endfor %} 
+                            <td><button name="save" value="{{ fitness.id }}">Save</button></td>
+                        {% else %}
+                            <td>{{ fitness.lift }}</td> 
+                            <td>{{ fitness.reps }}</td>
+                            <td>{{ fitness.weight }}</td>
+                            <td> 
+                                <button formnovalidate name="edit" value="{{ fitness.id }}">Edit</button>
+                                <button formnovalidate name="delete" value="{{ fitness.id }}">Delete</button>
+                            </td>
+                        {% endif %}      
+                    </tr>
+                    {% endfor %}                     
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<p>You are not logged in</p>
+<p>You can <a href="{% url 'login' %}?next={{ request.path }}">Login</a> if you like.</p>
+    
+{% endif %}
+{% endblock %}
+    

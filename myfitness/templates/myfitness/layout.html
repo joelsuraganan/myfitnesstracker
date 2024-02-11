@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'myfitness/myfitness.css' %}"/>
+
+</head>
+
+<body>
+    <div class="container">
+        <img class="workout1" src="{% static 'myfitness/images/workout1.jpeg' %}" alt="Workout1">
+        <img class="workout2" src="{% static 'myfitness/images/workout2.jpeg' %}" alt="Workout2">
+        <div class="center-text">
+            <h1>Myfitnesstracker</h1>
+            <h2>"Your one stop for all your fitness goals"</h2>
+        </div>
+    </div>
+
+<div class="navbar">
+    <a href="{% url 'home' %}" class="navbar-item">Home</a>
+    <a href="{% url 'workouts' %}" class="navbar-item">Workouts</a>
+    <a href="{% url 'supplements' %}" class="navbar-item">Supplements</a>
+    <a href="{% url 'nutrition' %}" class="navbar-item">Nutrition</a>
+    <a href="{% url 'faq' %}" class="navbar-item">FAQ</a>
+    <a href="{% url 'login' %}?next={% url 'dashboard' %}" class="navbar-item">Login</a>
+</div>
+
+<div class="body-content">
+    {% block content %}
+    {% endblock %}
+
+</div>
+</body>
+</html>

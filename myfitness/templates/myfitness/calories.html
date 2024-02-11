@@ -1,0 +1,126 @@
+{% extends "myfitness/auth_layout.html" %}
+{% block title %}
+Workout Tracker
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<p>Authenticated as
+<pre>
+    Name: {{ user.get_full_name }}
+    Email: {{ user.email }}
+</pre>
+</p>
+    
+<div class="boxes.container">
+    <div class="info-workout">
+        <h2>Nutrition for today</h2>
+        <h3>Down below input your calories, protein, carbs, and fat then click save to view in dashboard</h3>
+        <!--a href="{% url 'workouttracker' %}"class="navbar-item">Click here to view/add more</a-->
+        <div class="box">
+        <form method="post" action="{% url 'calorieupdate' %}"> 
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Calorie</th>
+                        <th>Protein</th>
+                        <th>Carbs</th>
+                        <th>Fat</th>
+                    </tr>
+                 </thead>
+                <tbody>  
+                    
+                    {% if not form.instance.id %}  
+                    {% if not cal_goal_rows == 1 %} 
+                    <tr>
+                        {% for field in form %}
+                        {% if field.name == "type" %}
+                        <td>Goal</td>
+                        {% else %}
+                        <td>{{ field }}</td>
+                        {% endif %}
+                        {% endfor %} 
+                        <td><button formnovalidate name="save_goal">Save</button></td>
+                    </tr>
+                    {% endif %}
+                    {% endif %} 
+
+                    {% if not form.instance.id %}  
+                    {% if not cal_current_rows == 1 and cal_goal_rows == 1 %} 
+                    <tr>
+                        {% for field in form %}
+                        {% if field.name == "type" %}
+                        <td>Current</td>
+                        {% else %}
+                        <td>{{ field }}</td>
+                        {% endif %}
+                        {% endfor %} 
+                        <td><button formnovalidate name="save_current">Save</button></td>
+                    </tr>
+                    {% endif %}
+                    {% endif %} 
+
+                    {% for calorie in calorie_goal %}   
+                    <tr>
+                        {% if form.instance.id == calorie.id %}
+                            {% for field in form %}
+                            {% if field.name == "type" %}
+                            <td>Goal</td>
+                            {% else %}
+                            <td>{{ field }}</td>
+                            {% endif %}
+                            {% endfor %} 
+                            <td><button formnovalidate name="save_goal" value="{{ calorie.id }}">Save</button></td>
+                        {% else %}
+                            <td>{{ calorie.type }}</td> 
+                            <td>{{ calorie.calorie }}</td>
+                            <td>{{ calorie.protein }}</td>
+                            <td>{{ calorie.carbs }}</td>
+                            <td>{{ calorie.fats }}</td>
+                            <td> 
+                                <button formnovalidate name="edit" value="{{ calorie.id }}">Edit</button>
+                                <button formnovalidate name="delete" value="{{ calorie.id }}">Delete</button>
+                            </td>
+                        {% endif %}      
+                    </tr>
+                    {% endfor %}   
+                    
+                    {% for calorie in calorie_current %}   
+                    <tr>
+                        {% if form.instance.id == calorie.id %}
+                            {% for field in form %}
+                            {% if field.name == "type" %}
+                            <td>Current</td>
+                            {% else %} 
+                            <td>{{ field }}</td>
+                            {% endif %} 
+                            {% endfor %} 
+                            <td><button formnovalidate name="save_current" value="{{ calorie.id }}">Save</button></td>
+                        {% else %}
+                            <td>{{ calorie.type }}</td> 
+                            <td>{{ calorie.calorie }}</td>
+                            <td>{{ calorie.protein }}</td>
+                            <td>{{ calorie.carbs }}</td>
+                            <td>{{ calorie.fats }}</td>
+                            <td> 
+                                <button formnovalidate name="edit" value="{{ calorie.id }}">Edit</button>
+                                <button formnovalidate name="delete" value="{{ calorie.id }}">Delete</button>
+                            </td>
+                        {% endif %}      
+                    </tr>
+                    {% endfor %}                     
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<p>You are not logged in</p>
+<p>You can <a href="{% url 'login' %}?next={{ request.path }}">Login</a> if you like.</p>
+    
+{% endif %}
+{% endblock %}
+    

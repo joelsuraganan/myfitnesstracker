@@ -1,0 +1,25 @@
+{% extends "myfitness/layout.html" %}
+{% load static %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+<h1 class="home">My Fitness Journey</h1>
+
+<img class="flexingold" src="{% static 'myfitness/images/flexingold.JPG' %}" alt="Flexingold">
+<img class="flexingnew" src="{% static 'myfitness/images/flexingnew.jpeg' %}" alt="Flexingnew">
+<h3>First picture is from August 2020. Second picture is from December 2022.</h3>
+<p class="homebody">I started my fitness journey 3 years ago, around August 2020, and when I started I had no clue
+    as to what I was doing. I would go into the gym and just do a bunch of random lifts because I never knew
+    what to do or how to do it, then I would come home and eat bad foods or no food at all. Then I would go to 
+    bed late and wake up even later and ask myself why I was so sore or why i was getting hurt. 
+    Fast forward three years I am on my journey to build my dream body and along 
+    the way I would love to help others who were in the situation I was 3 years ago. I find that a lot of beginners
+    seek out information that is not very clear to them and this leads to them getting frustrated or even worse getting
+    hurt. Over my three years I had to do a lot of research and trial and error to come up with ways to reach my goals.
+    This application that I have created is a work in progress to help anyone and everyone reach their goals. I want people
+    to see that if they have everything they want and need right infront of them that they can achieve anything
+    they want. 
+</p>
+
+{% endblock %}

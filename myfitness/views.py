@@ -5,12 +5,24 @@ from myfitness.forms import FitnessForm
 from myfitness.models import Fitness
 from myfitness.forms import CalorieForm
 from myfitness.models import Calorie
+from django.contrib.auth.forms import UserCreationForm
 
 def index(request):
     return render(
         request,
         'myfitness/index.html'
     )
+
+def signup(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    context = {'form':form}    
+    return render(request, "myfitness/signup.html", context)
 
 def home(request):
     return render(request, "myfitness/home.html")

@@ -1,6 +1,10 @@
 from django.db import models
 from datetime import date
 
+
+
+
+
 class Fitness(models.Model):
     
     class Meta:

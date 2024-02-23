@@ -3,6 +3,7 @@ from myfitness import views
 
 urlpatterns = [
     path("login/", views.login, name="login"),
+    path("signup/", views.signup, name="signup"),
     path("faq/", views.faq, name="faq"),
     path("nutrition/", views.nutrition, name="nutrition"),
     path("workouts/", views.workouts, name="workouts"),

@@ -1,0 +1,12 @@
+{% extends "myfitness/layout.html" %}
+{% load static %}
+{% block title %}
+Sign Up
+{% endblock %}
+{% block content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <input type="submit" name="Create User">
+{% endblock %}

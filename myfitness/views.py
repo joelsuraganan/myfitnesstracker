@@ -7,6 +7,8 @@ from myfitness.forms import CalorieForm
 from myfitness.models import Calorie
 from django.contrib.auth.forms import UserCreationForm
 
+
+
 def index(request):
     return render(
         request,

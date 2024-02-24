@@ -10,8 +10,7 @@ class CreateUserForm(UserCreationForm):
     
     class Meta:
         model = User
-        email = forms.EmailField()
-        fields = ['username','email', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2']
 
 class FitnessForm(forms.ModelForm):
     class Meta:

@@ -82,25 +82,28 @@ Email: {{ user.email }}
         <h2>Weight Tracker</h2>
         <a href="{% url 'weight' %}"class="navbar-item">Click here to view/edit</a>
         <div class="box">
-            <table>    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>Goal</th>
+                        <th>Last</th>
+                        <th>Current</th>
+                    </tr>
+                </thead>    
                 <tbody>
+             
+                    {% for weight in weights %}
+                            
                     <tr>
-                        <td>Start</td>
-                        <td>120</td>
+                        <td>{{ weight.start }}</td>
+                        <td>{{ weight.goal }}</td>
+                        <td>{{ weight.last }}</td>
+                        <td>{{ weight.current }}</td>
                     </tr>
-                    <tr>
-                        <td>Last Week</td>
-                        <td>122</td>
-                    </tr>
-                    <tr>
-                        <td>Current</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Goal</td>
-                        <td>140</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
+                
             </table>
         </div>
        

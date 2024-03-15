@@ -13,11 +13,11 @@ Weight Tracker
     
 <div class="boxes.container">
     <div class="info-workout">
-        <h2>Workouts for today</h2>
-        <h3>Down below input your lift, reps, and weight then click save to view in dashboard</h3>
+        <h2>Weight Tracker</h2>
+        <h3>Down below input your start, goal, last week, and current weight then click save to view in dashboard</h3>
         <!--a href="{% url 'workouttracker' %}"class="navbar-item">Click here to view/add more</a-->
         <div class="box">
-        <form method="post" action="{% url 'workoutupdate' %}"> 
+        <form method="post" action="{% url 'weightupdate' %}"> 
             {% csrf_token %}
             <table>
                 <thead>
@@ -29,30 +29,36 @@ Weight Tracker
                     </tr>
                 </thead>
                 <tbody>  
-                    {% if not form.instance.id %}                             
+                    {% if not form.instance.id %}  
+                    {% if not weight_rows == 1 %}                           
                     <tr>
                         {% for field in form %}
+                        {% if field.name == "last" %}
+                        <td>0</td>
+                        {% else %}
                         <td>{{ field }}</td>
+                        {% endif %}
                         {% endfor %} 
                         <td><button name="save">Save</button></td>
                     </tr>
                     {% endif %}
-                    {% for fitness in fitnesss %}   
+                    {% endif %}
+                    {% for weight in weights %}   
                     <tr>
-                        {% if form.instance.id == fitness.id %}
+                        {% if form.instance.id == weight.id %}
                             {% for field in form %}
                          
                             <td>{{ field }}</td>
                             {% endfor %} 
-                            <td><button name="save" value="{{ fitness.id }}">Save</button></td>
+                            <td><button name="save" value="{{ weight.id }}">Save</button></td>
                         {% else %}
-                            <td>{{ fitness.start }}</td> 
-                            <td>{{ fitness.goal }}</td>
-                            <td>{{ fitness.last }}</td>
-                            <td>{{ fitness.current }}</td>
+                            <td>{{ weight.start }}</td> 
+                            <td>{{ weight.goal }}</td>
+                            <td>{{ weight.last }}</td>
+                            <td>{{ weight.current }}</td>
                             <td> 
-                                <button formnovalidate name="edit" value="{{ fitness.id }}">Edit</button>
-                                <button formnovalidate name="delete" value="{{ fitness.id }}">Delete</button>
+                                <button formnovalidate name="edit" value="{{ weight.id }}">Edit</button>
+                                <button formnovalidate name="delete" value="{{ weight.id }}">Delete</button>
                             </td>
                         {% endif %}      
                     </tr>

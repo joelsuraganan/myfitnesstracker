@@ -31,7 +31,7 @@ class Calorie(models.Model):
 class Weight(models.Model):
     
     class Meta:
-        unique_together = (('user_name', 'date'),)
+        unique_together = (('user_name'),)
         
     user_name = models.CharField(max_length=50)
     date = models.DateField(default= date.today().strftime('%d-%m-%Y'))

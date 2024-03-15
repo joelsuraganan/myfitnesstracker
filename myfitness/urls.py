@@ -16,5 +16,6 @@ urlpatterns = [
     path("calories/", views.calories, name="calories"),
     path("calorieupdate/", views.calorieupdate, name="calorieupdate"), 
     path("weight/", views.weight, name="weight"),
+    path("weightupdate/", views.weightupdate, name="weightupdate"),
     path("logout/", views.logout, name="logout"),
 ]

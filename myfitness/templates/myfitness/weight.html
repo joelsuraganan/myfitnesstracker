@@ -3,5 +3,75 @@
 Weight Tracker
 {% endblock %}
 {% block content %}
-<p>This page is under construction.</p>
+{% if user.is_authenticated %}
+<p>Authenticated as
+<pre>
+    Name: {{ user.get_full_name }}
+    Email: {{ user.email }}
+</pre>
+</p>
+    
+<div class="boxes.container">
+    <div class="info-workout">
+        <h2>Weight Tracker</h2>
+        <h3>Down below input your start, goal, last week, and current weight then click save to view in dashboard</h3>
+        <!--a href="{% url 'workouttracker' %}"class="navbar-item">Click here to view/add more</a-->
+        <div class="box">
+        <form method="post" action="{% url 'weightupdate' %}"> 
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Start Weight</th>
+                        <th>Goal Weight</th>
+                        <th>Last Week Weight</th>
+                        <th>Current Weight</th>
+                    </tr>
+                </thead>
+                <tbody>  
+                    {% if not form.instance.id %}  
+                    {% if not weight_rows == 1 %}                           
+                    <tr>
+                        {% for field in form %}
+                        {% if field.name == "last" %}
+                        <td>0</td>
+                        {% else %}
+                        <td>{{ field }}</td>
+                        {% endif %}
+                        {% endfor %} 
+                        <td><button name="save">Save</button></td>
+                    </tr>
+                    {% endif %}
+                    {% endif %}
+                    {% for weight in weights %}   
+                    <tr>
+                        {% if form.instance.id == weight.id %}
+                            {% for field in form %}
+                         
+                            <td>{{ field }}</td>
+                            {% endfor %} 
+                            <td><button name="save" value="{{ weight.id }}">Save</button></td>
+                        {% else %}
+                            <td>{{ weight.start }}</td> 
+                            <td>{{ weight.goal }}</td>
+                            <td>{{ weight.last }}</td>
+                            <td>{{ weight.current }}</td>
+                            <td> 
+                                <button formnovalidate name="edit" value="{{ weight.id }}">Edit</button>
+                                <button formnovalidate name="delete" value="{{ weight.id }}">Delete</button>
+                            </td>
+                        {% endif %}      
+                    </tr>
+                    {% endfor %}                     
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<p>You are not logged in</p>
+<p>You can <a href="{% url 'login' %}?next={{ request.path }}">Login</a> if you like.</p>
+    
+{% endif %}
 {% endblock %}

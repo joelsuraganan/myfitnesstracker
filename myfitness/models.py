@@ -26,3 +26,16 @@ class Calorie(models.Model):
     protein = models.IntegerField(max_length=3)
     carbs = models.IntegerField(max_length=3)
     fats = models.IntegerField(max_length=3)
+
+
+class Weight(models.Model):
+    
+    class Meta:
+        unique_together = (('user_name'),)
+        
+    user_name = models.CharField(max_length=50)
+    date = models.DateField(default= date.today().strftime('%d-%m-%Y'))
+    start = models.IntegerField(max_length=3)
+    goal = models.IntegerField(max_length=3)
+    last = models.IntegerField(max_length=3)
+    current = models.IntegerField(max_length=3)

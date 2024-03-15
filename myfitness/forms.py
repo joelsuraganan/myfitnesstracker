@@ -1,6 +1,7 @@
 from django import forms
 from myfitness.models import Fitness
 from myfitness.models import Calorie
+from myfitness.models import Weight
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -21,3 +22,8 @@ class CalorieForm(forms.ModelForm):
     class Meta:
         model = Calorie
         fields = ['type', 'calorie', 'protein', 'carbs', 'fats']
+
+class WeightForm(forms.ModelForm):
+    class Meta:
+        model = Weight
+        fields = ['start', 'goal', 'last', 'current']

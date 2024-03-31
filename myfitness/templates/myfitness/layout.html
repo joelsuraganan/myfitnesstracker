@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset= "utf-8"/>
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'myfitness/myfitness.css' %}"/>
@@ -26,6 +26,7 @@
     <a href="{% url 'faq' %}" class="navbar-item">FAQ</a>
     <a href="{% url 'login' %}?next={% url 'dashboard' %}" class="navbar-item">Login</a>
     <a href="{% url 'signup' %}" class="navbar-item">Sign Up</a>
+    <a href="{% url 'gym' %}" class="navbar-item">Gyms Near Me</a>
 </div>
 
 <div class="body-content">

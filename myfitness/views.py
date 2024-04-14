@@ -8,7 +8,36 @@ from myfitness.models import Calorie
 from myfitness.forms import WeightForm
 from myfitness.models import Weight
 from django.contrib.auth.forms import UserCreationForm
-import requests
+#import requests
+from googleapiclient.discovery import build
+
+def display_videos(request):
+    # Your YouTube API key
+    api_key = 'AIzaSyArXQwTKjeHzFs90YhaFFAKlvq3-yUO4eo'
+
+    # Create a YouTube API client
+    youtube = build('youtube', 'v3', developerKey=api_key)
+
+    # Make a request to the playlistItems endpoint to retrieve videos from your playlist
+    playlist_id = 'PLK6E4pf5UhHwh4eF4FcKfVZ4rKqY8sQdt'
+    api_request = youtube.playlistItems().list(
+        part='snippet',
+        playlistId=playlist_id,
+        maxResults=5  
+    )
+    response = api_request.execute()
+
+    # Extract video data
+    videos = []
+    for item in response['items']:
+        video = {
+            'title': item['snippet']['title'],
+            'video_id': item['snippet']['resourceId']['videoId']
+        }
+        videos.append(video)
+
+    # Render the page with video data
+    return render(request, 'myfitness/videos.html', {'videos': videos})
 
 
 def index(request):

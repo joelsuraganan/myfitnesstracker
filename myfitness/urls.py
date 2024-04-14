@@ -1,10 +1,12 @@
 from django.urls import path
 from myfitness import views
+from .views import display_videos
 
 urlpatterns = [
     path("login/", views.login, name="login"),
     path("signup/", views.signup, name="signup"),
     path("gym/", views.gym, name="gym"),
+    path('videos/', display_videos, name='display_videos'),
     path("faq/", views.faq, name="faq"),
     path("nutrition/", views.nutrition, name="nutrition"),
     path("workouts/", views.workouts, name="workouts"),

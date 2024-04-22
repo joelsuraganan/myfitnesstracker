@@ -1,9 +1,10 @@
-{% extends "myfitness/layout.html" %}
+{% extends "myfitness/auth_layout.html" %}
 {% load static %}
 {% block title %}
 Youtube Videos
 {% endblock %}
 {% block content %}
+{% if user.is_authenticated %}
 <head>
     <meta charset="UTF-8">
     <title>YouTube Videos</title>
@@ -17,4 +18,9 @@ Youtube Videos
         {% endfor %}
     </div>
 </body>
+{% else %}
+<p>You are not logged in</p>
+<p>You can <a href="{% url 'login' %}?next={{ request.path }}">Login</a> if you like.</p>
+    
+{% endif %}
 {% endblock %}

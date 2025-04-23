@@ -201,3 +201,19 @@ th, td {
     background-color: #45a049;
   }
   
+  /* Make the logout button match navbar links */
+.navbar-item.logout-button {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    font-variant: small-caps;
+    margin-left: 30px;
+    text-decoration: none;
+}
+
+
+    
+

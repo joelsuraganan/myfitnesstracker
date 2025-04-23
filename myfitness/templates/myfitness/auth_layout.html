@@ -24,7 +24,15 @@
     <a href="{% url 'calories' %}" class="navbar-item">Calorie Tracker</a>
     <a href="{% url 'weight' %}" class="navbar-item">Weight Tracker</a>
     <a href="{% url 'display_videos' %}" class="navbar-item">My Videos</a>
-    <a href="{% url 'logout' %}?next={% url 'home' %}" class="navbar-item">Logout</a>
+
+    <!-- Replace logout link with a POST form -->
+    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <!-- Hidden field to pass the 'next' parameter -->
+        <input type="hidden" name="next" value="{% url 'home' %}">
+        <button type="submit" class="navbar-item logout-button">Logout</button>
+
+    </form>
 </div>
 
 <div class="auth-content">

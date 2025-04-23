@@ -3,71 +3,80 @@
 {% block title %}
 Gyms Near Me
 {% endblock %}
+
 {% block content %}
 <head>
-    <title>Gyms Near Me</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQLLGf5WimWRrdTNNy6Wnhz6RobkL14mE&libraries=places&callback=initMap" async defer></script>
-    <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 0, lng: 0},
-                zoom: 8
-            });
+  <title>Gyms Near Me</title>
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zoZC55-9ty9SLYjTwZsiRK64WWpZEVg&libraries=places&callback=initMap">
+  </script>
+  <script>
+    let map;
 
-            document.getElementById('submit').addEventListener('click', function() {
-                var zipCode = document.getElementById('zip-code').value;
-                var geocoder = new google.maps.Geocoder();
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 39.8283, lng: -98.5795 }, // Center of the USA
+            zoom: 4,
+      });
 
-                geocoder.geocode({'address': zipCode}, function(results, status) {
-                    if (status === 'OK') {
-                        var location = results[0].geometry.location;
-                        map.setCenter(location);
-                        map.setZoom(12);
+      document.getElementById("submit").addEventListener("click", function () {
+        const zipCode = document.getElementById("zip-code").value;
+        const geocoder = new google.maps.Geocoder();
 
-                        var request = {
-                            location: location,
-                            radius: '50000', // Search radius in meters
-                            type: ['gym'] // Search for gyms
-                        };
+        geocoder.geocode({ address: zipCode }, function (results, status) {
+          if (status === "OK") {
+            const location = results[0].geometry.location;
+            map.setCenter(location);
+            map.setZoom(12);
 
-                        var service = new google.maps.places.PlacesService(map);
-                        service.nearbySearch(request, callback);
-                    } else {
-                        alert('Zipcode not valid for the following reason: ' + status);
-                    }
-                });
-            });
+            // Search for gyms near the location
+            const request = {
+              query: "gym",
+              fields: ["name", "geometry"],
+              locationBias: {
+                radius: 50000,
+                center: location
+              }
+            };
 
-            function callback(results, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    for (var i = 0; i < results.length; i++) {
-                        createMarker(results[i]);
-                    }
+            const service = new google.maps.places.PlacesService(map);
+            service.textSearch(request, function (results, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (let i = 0; i < results.length; i++) {
+                  const place = results[i];
+                  if (place.geometry && place.geometry.location) {
+                    const marker = new google.maps.Marker({
+                      map: map,
+                      position: place.geometry.location,
+                    });
+
+                    const infowindow = new google.maps.InfoWindow({
+                      content: place.name,
+                    });
+
+                    marker.addListener("click", function () {
+                      infowindow.open(map, marker);
+                    });
+                  }
                 }
-            }
-
-            function createMarker(place) {
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: place.geometry.location
-                });
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: place.name
-                });
-
-                marker.addListener('click', function() {
-                    infowindow.open(map, marker);
-                });
-            }
-        }
-    </script>
+              } else {
+                alert("No gyms found. Status: " + status);
+              }
+            });
+          } else {
+            alert("Zipcode error: " + status);
+          }
+        });
+      });
+    }
+  </script>
 </head>
+
 <body>
-    <div>
-        <input type="text" id="zip-code" placeholder="Enter ZIP code">
-        <button id="submit">Find Gyms</button>
-    </div>
-    <div id="map" style="height: 400px;"></div>
+  <div>
+    <input type="text" id="zip-code" placeholder="Enter ZIP code">
+    <button id="submit">Find Gyms</button>
+  </div>
+  <div id="map" style="height: 400px; width: 100%;"></div>
 </body>
 {% endblock %}

@@ -1,4 +1,4 @@
-#!/Users/nishanthijeyarajah/Desktop/myprojects/hello_django/venv/bin/python3.12
+#!/Users/nishanthijeyarajah/Documents/Capstone/myfitnesstracker/myfitnesstracker/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

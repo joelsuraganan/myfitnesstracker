@@ -1,6 +1,7 @@
 from django.urls import path
 from myfitness import views
 from .views import display_videos
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("login/", views.login, name="login"),
@@ -20,5 +21,6 @@ urlpatterns = [
     path("calorieupdate/", views.calorieupdate, name="calorieupdate"), 
     path("weight/", views.weight, name="weight"),
     path("weightupdate/", views.weightupdate, name="weightupdate"),
-    path("logout/", views.logout, name="logout"),
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
+    #path("logout/", views.logout, name="logout"),
 ]

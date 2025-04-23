@@ -63,44 +63,6 @@ def home(request):
 def gym(request):
     return render(request, "myfitness/gym.html")
 
-'''def gym_location(request):
-    # Define the base URL for the Geocoding API
-    base_url = "https://maps.googleapis.com/maps/api/geocode/json"
-
-# Define your API key
-    api_key = "AIzaSyBQLLGf5WimWRrdTNNy6Wnhz6RobkL14mE"
-
-    # Define the address you want to geocode
-    #address = "150 Nature Haven Crescent, Pickering, ON"
-    address = "43560"
-
-    # Prepare the parameters for the API request
-    params = {
-        "address": address,
-        "key": api_key
-    }
-
-    # Make the API request
-    response = requests.get(base_url, params=params)
-
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Parse the JSON response
-        data = response.json()
-
-        # Extract the latitude and longitude from the response
-        if data["status"] == "OK":
-            location = data["results"][0]["geometry"]["location"]
-            latitude = location["lat"]
-            longitude = location["lng"]
-            print("Latitude:", latitude)
-            print("Longitude:", longitude)
-        else:
-            print("Geocoding failed. Status:", data["status"])
-    else:
-        print("Failed to make API request. Status code:", response.status_code)
-    return render(request, "myfitness/gym_location.html")'''
-
 def workouts(request):
     return render(request, "myfitness/workouts.html")
 
